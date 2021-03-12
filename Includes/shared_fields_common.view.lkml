@@ -5,14 +5,16 @@ view: shared_fields_common {
   dimension: app_id {
     description: "The application identifier from which the event originated."
     type: string
-    sql: ${TABLE}.app_id ;;
+    # sql: ${TABLE}.app_id ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Application"
   }
 
   dimension: tracker_version {
     description: "The tracker version."
     type: string
-    sql: ${TABLE}.v_tracker ;;
+    # sql: ${TABLE}.v_tracker ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Application"
   }
 
@@ -22,7 +24,8 @@ view: shared_fields_common {
   dimension: dcs_id {
     description: "The Webtrends profile identifier."
     type: string
-    sql: ${TABLE}.dcs_id ;;
+    # sql: ${TABLE}.dcs_id ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Application"
   }
 
@@ -32,14 +35,16 @@ view: shared_fields_common {
     label: "User Agent"
     description: "The useragent string for this session."
     type: string
-    sql: ${TABLE}.useragent ;;
+    # sql: ${TABLE}.useragent ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Browser"
   }
 
   dimension: browser_name {
     description: "The browser name. Depending on the browser, name often matches the family, but can also include major version numbers."
     type: string
-    sql: ${TABLE}.br_name ;;
+    # sql: ${TABLE}.br_name ;;
+    sql: ${TABLE}.status ;; #Won
     drill_fields: [os_family,browser_name,browser_version,useragent]
     group_label: "Browser"
   }
@@ -47,7 +52,8 @@ view: shared_fields_common {
   dimension: browser_family {
     description: "The major family of browser, regardless of name or version. e.g., Chrome, Safari, Internet Explorer, etc."
     type: string
-    sql: ${TABLE}.br_family ;;
+    # sql: ${TABLE}.br_family ;;
+    sql: ${TABLE}.status ;; #Won
     drill_fields: [os_family,browser_name,browser_version,useragent]
     group_label: "Browser"
   }
@@ -55,28 +61,32 @@ view: shared_fields_common {
   dimension: browser_version {
     description: "The specific version number of the browser."
     type: string
-    sql: ${TABLE}.br_version ;;
+    # sql: ${TABLE}.br_version ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Browser"
   }
 
   dimension: browser_type {
     description: "Browser types can be mobile or non-mobile."
     type: string
-    sql: ${TABLE}.br_type ;;
+    # sql: ${TABLE}.br_type ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Browser"
   }
 
   dimension: browser_engine {
     description: "The browser rendering engine name. e.g.: Blink, WebKit, Trident."
     type: string
-    sql: ${TABLE}.br_renderengine ;;
+    # sql: ${TABLE}.br_renderengine ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Browser"
   }
 
   dimension: browser_language {
     description: "The language the browser is set to for localization."
     type: string
-    sql: ${TABLE}.br_lang ;;
+    # sql: ${TABLE}.br_lang ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Browser"
   }
 
@@ -86,7 +96,8 @@ view: shared_fields_common {
 
   dimension: geo_country {
     type: string
-    sql: ${TABLE}.geo_country ;;
+    # sql: ${TABLE}.geo_country ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Location"
     suggest_explore: geo_cache
     suggest_dimension: geo_cache.geo_country
@@ -94,14 +105,16 @@ view: shared_fields_common {
 
   dimension: geo_country_name {
     type: string
-    sql:  ${TABLE}.geo_country_name ;;
+    # sql:  ${TABLE}.geo_country_name ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Location"
     suggest_explore: geo_cache
     suggest_dimension: geo_cache.geo_country_name
   }
   dimension: geo_continent_name {
     type: string
-    sql:  ${TABLE}.geo_continent_name ;;
+    # sql:  ${TABLE}.geo_continent_name ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Location"
     suggest_explore: geo_cache
     suggest_dimension: geo_cache.geo_continent_name
@@ -110,19 +123,22 @@ view: shared_fields_common {
 
   dimension: geo_region {
     type: string
-    sql: ${TABLE}.geo_region ;;
+    # sql: ${TABLE}.geo_region ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Location"
   }
   dimension: geo_region_or_country {
     type: string
     description: "The Geo Region or Country when the Region is blank."
-    sql: COALESCE(${TABLE}.geo_region_name,${TABLE}.geo_country)  ;;
+    # sql: COALESCE(${TABLE}.geo_region_name,${TABLE}.geo_country)  ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Location"
   }
 
   dimension: geo_region_name {
     type: string
-    sql: ${TABLE}.geo_region_name ;;
+    # sql: ${TABLE}.geo_region_name ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Location"
     suggest_explore: geo_cache
     suggest_dimension: geo_cache.geo_region_name
@@ -130,7 +146,8 @@ view: shared_fields_common {
 
   dimension: geo_city {
     type: string
-    sql: ${TABLE}.geo_city ;;
+    # sql: ${TABLE}.geo_city ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Location"
     suggest_explore: geo_cache
     suggest_dimension: geo_cache.geo_city
@@ -138,11 +155,12 @@ view: shared_fields_common {
 
   dimension: geo_city_and_region { # Note: this should be synced up with the record in geo_cache.view
     type: string
-    sql: CASE
-       WHEN (${TABLE}.geo_city = '' OR ${TABLE}.geo_city IS NULL) THEN ${TABLE}.geo_country_name
-       WHEN (${TABLE}.geo_country = 'CA' OR ${TABLE}.geo_country = 'US') THEN ${TABLE}.geo_city || ' - ' || ${TABLE}.geo_region_name
-       ELSE ${TABLE}.geo_city || ' - ' || ${TABLE}.geo_country_name
-      END;;
+    # sql: CASE
+    #   WHEN (${TABLE}.geo_city = '' OR ${TABLE}.geo_city IS NULL) THEN ${TABLE}.geo_country_name
+    #   WHEN (${TABLE}.geo_country = 'CA' OR ${TABLE}.geo_country = 'US') THEN ${TABLE}.geo_city || ' - ' || ${TABLE}.geo_region_name
+    #   ELSE ${TABLE}.geo_city || ' - ' || ${TABLE}.geo_country_name
+    #   END;;
+    sql: ${TABLE}.status ;; #Won
     suggest_explore: geo_cache
     suggest_dimension: geo_cache.geo_city_and_region
     group_label: "Location"
@@ -156,7 +174,8 @@ view: shared_fields_common {
 
   dimension: geo_latitude {
     type: number
-    sql: ${TABLE}.geo_latitude ;;
+    # sql: ${TABLE}.geo_latitude ;;
+    sql: ${TABLE}.id ;; #Won;
     group_label: "Location"
     # use geo_location instead
     hidden: yes
@@ -164,7 +183,8 @@ view: shared_fields_common {
 
   dimension: geo_longitude {
     type: number
-    sql: ${TABLE}.geo_longitude ;;
+    # sql: ${TABLE}.geo_longitude ;;
+    sql: ${TABLE}.id ;; #Won;
     group_label: "Location"
     # use geo_location instead
     hidden: yes
@@ -172,7 +192,8 @@ view: shared_fields_common {
 
   dimension: geo_timezone {
     type: string
-    sql: ${TABLE}.geo_timezone ;;
+    # sql: ${TABLE}.geo_timezone ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Location"
     # use os_timezone instead
     hidden: yes
@@ -187,7 +208,8 @@ view: shared_fields_common {
 
   dimension: geo_bc {
     type: string
-    sql: CASE WHEN ${TABLE}.geo_region = 'BC' THEN 'BC' ELSE 'Outside BC' END;;
+    # sql: CASE WHEN ${TABLE}.geo_region = 'BC' THEN 'BC' ELSE 'Outside BC' END;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Location"
   }
 
@@ -212,7 +234,8 @@ view: shared_fields_common {
   dimension: session_id {
     description: "A unique identifier for a given user session, based on IP and timestamp."
     type: string
-    sql: ${TABLE}.session_id ;;
+    # sql: ${TABLE}.session_id ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Session"
   }
 
@@ -230,7 +253,8 @@ view: shared_fields_common {
   dimension: session_index {
     description: "A page load index, starting at 1 on the first page visited. Can be used in path analysis."
     type: number
-    sql: ${TABLE}.session_index ;;
+    # sql: ${TABLE}.session_index ;;
+    sql: ${TABLE}.id ;; #Won;
     group_label: "Session"
 #     hidden: yes
   }
@@ -241,19 +265,20 @@ view: shared_fields_common {
   dimension: first_or_returning_session {
     type: string
 
-    case: {
-      when: {
-        sql: ${session_index} = 1 ;;
-        label: "First session"
-      }
+    # case: {
+    #   when: {
+    #     sql: ${session_index} = 1 ;;
+    #     label: "First session"
+    #   }
 
-      when: {
-        sql: ${session_index} > 1 ;;
-        label: "Returning session"
-      }
+    #   when: {
+    #     sql: ${session_index} > 1 ;;
+    #     label: "Returning session"
+    #   }
 
-      else: "Error"
-    }
+    #   else: "Error"
+    # }
+    sql: ${TABLE}.status ;; #Won
 
     group_label: "Session"
     hidden: yes
@@ -263,19 +288,22 @@ view: shared_fields_common {
 
   dimension: user_id {
     type: string
-    sql: ${TABLE}.user_id ;;
+    # sql: ${TABLE}.user_id ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "User"
   }
 
   dimension: domain_userid {
     type: string
-    sql: ${TABLE}.domain_userid ;;
+    # sql: ${TABLE}.domain_userid ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "User"
   }
 
   dimension: network_userid {
     type: string
-    sql: ${TABLE}.network_userid ;;
+    # sql: ${TABLE}.network_userid ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "User"
     hidden: yes
   }
@@ -284,14 +312,16 @@ view: shared_fields_common {
 
   dimension: referrer_urlscheme {
     type: string
-    sql: ${TABLE}.refr_urlscheme ;;
+    # sql: ${TABLE}.refr_urlscheme ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Referrer"
     hidden: yes
   }
 
   dimension: referrer_urlhost {
     type: string
-    sql: COALESCE(${TABLE}.refr_urlhost, '(direct link)') ;;
+    # sql: COALESCE(${TABLE}.refr_urlhost, '(direct link)') ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Referrer"
   }
 
@@ -304,13 +334,15 @@ view: shared_fields_common {
 
   dimension: referrer_urlpath {
     type: string
-    sql: COALESCE(${TABLE}.refr_urlpath, '(direct link)') ;;
+    # sql: COALESCE(${TABLE}.refr_urlpath, '(direct link)') ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Referrer"
   }
 
   dimension: referrer_urlquery {
     type: string
-    sql: ${TABLE}.refr_urlquery ;;
+    # sql: ${TABLE}.refr_urlquery ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Referrer"
   }
 
@@ -322,23 +354,26 @@ view: shared_fields_common {
 
   dimension: referrer_medium {
     type: string
-    sql: CASE
-          WHEN ${TABLE}.refr_medium IS NULL THEN 'direct'
-          WHEN ${TABLE}.refr_medium = 'unknown' THEN 'other'
-          ELSE  ${TABLE}.refr_medium END;;
+    # sql: CASE
+    #       WHEN ${TABLE}.refr_medium IS NULL THEN 'direct'
+    #       WHEN ${TABLE}.refr_medium = 'unknown' THEN 'other'
+    #       ELSE  ${TABLE}.refr_medium END;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Referrer"
     drill_fields: [referrer_medium, referrer_source, referrer_urlhost]
   }
 
   dimension: referrer_source {
     type: string
-    sql: ${TABLE}.refr_source ;;
+    # sql: ${TABLE}.refr_source ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Referrer"
   }
 
   dimension: referrer_term {
     type: string
-    sql: ${TABLE}.refr_term ;;
+    # sql: ${TABLE}.refr_term ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Referrer"
   }
 
@@ -350,84 +385,96 @@ view: shared_fields_common {
 
   dimension: marketing_medium {
     type: string
-    sql: ${TABLE}.mkt_medium ;;
+    # sql: ${TABLE}.mkt_medium ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Marketing"
     drill_fields: [marketing_drills*]
   }
 
   dimension: marketing_source {
     type: string
-    sql: ${TABLE}.mkt_source ;;
+    # sql: ${TABLE}.mkt_source ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Marketing"
     drill_fields: [marketing_drills*]
   }
 
   dimension: marketing_term {
     type: string
-    sql: ${TABLE}.mkt_term ;;
+    # sql: ${TABLE}.mkt_term ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Marketing"
     drill_fields: [marketing_drills*]
   }
 
   dimension: marketing_content {
     type: string
-    sql: ${TABLE}.mkt_content ;;
+    # sql: ${TABLE}.mkt_content ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Marketing"
     drill_fields: [marketing_drills*]
   }
 
   dimension: marketing_campaign {
     type: string
-    sql: ${TABLE}.mkt_campaign ;;
+    # sql: ${TABLE}.mkt_campaign ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Marketing"
     drill_fields: [marketing_drills*]
   }
 
   dimension: marketing_clickid {
     type: string
-    sql: ${TABLE}.mkt_clickid ;;
+    # sql: ${TABLE}.mkt_clickid ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Marketing"
     drill_fields: [marketing_drills*]
   }
 
   dimension: marketing_network {
     type: string
-    sql: ${TABLE}.mkt_network ;;
+    # sql: ${TABLE}.mkt_network ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Marketing"
     drill_fields: [marketing_drills*]
   }
 
   dimension: marketing_channel {
     type: string
-    sql: ${TABLE}.channel ;;
+    # sql: ${TABLE}.channel ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Marketing"
     drill_fields: [marketing_drills*]
   }
 
   dimension: marketing_date {
     type: string
-    sql: SPLIT_PART(${TABLE}.mkt_campaign,'_',1) ;;
+    # sql: SPLIT_PART(${TABLE}.mkt_campaign,'_',1) ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Marketing"
     drill_fields: [marketing_drills*]
   }
 
   dimension: marketing_ministry {
     type: string
-    sql: SPLIT_PART(${TABLE}.mkt_campaign,'_',2) ;;
+    # sql: SPLIT_PART(${TABLE}.mkt_campaign,'_',2) ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Marketing"
     drill_fields: [marketing_drills*]
   }
 
   dimension: marketing_team {
     type: string
-    sql: SPLIT_PART(${TABLE}.mkt_campaign,'_',3) ;;
+    # sql: SPLIT_PART(${TABLE}.mkt_campaign,'_',3) ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Marketing"
     drill_fields: [marketing_drills*]
   }
 
   dimension: marketing_campaign_id {
     type: string
-    sql: SPLIT_PART(${TABLE}.mkt_campaign,'_',4) ;;
+    # sql: SPLIT_PART(${TABLE}.mkt_campaign,'_',4) ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Marketing"
     drill_fields: [marketing_drills*]
 
@@ -435,56 +482,64 @@ view: shared_fields_common {
 
   dimension: marketing_sequence {
     type: string
-    sql: SPLIT_PART(${TABLE}.mkt_campaign,'_',5) ;;
+    # sql: SPLIT_PART(${TABLE}.mkt_campaign,'_',5) ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Marketing"
     drill_fields: [marketing_drills*]
   }
 
   dimension: marketing_cta {
     type: string
-    sql: SPLIT_PART(${TABLE}.mkt_campaign,'_',6) ;;
+    # sql: SPLIT_PART(${TABLE}.mkt_campaign,'_',6) ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Marketing"
     drill_fields: [marketing_drills*]
   }
 
   dimension: marketing_platform {
     type: string
-    sql: SPLIT_PART(${TABLE}.mkt_campaign,'_',7) ;;
+    # sql: SPLIT_PART(${TABLE}.mkt_campaign,'_',7) ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Marketing"
     drill_fields: [marketing_drills*]
   }
 
   dimension: marketing_sender_placement {
     type: string
-    sql: SPLIT_PART(${TABLE}.mkt_campaign,'_',8) ;;
+    # sql: SPLIT_PART(${TABLE}.mkt_campaign,'_',8) ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Marketing"
     drill_fields: [marketing_drills*]
   }
 
   dimension: marketing_lang {
     type: string
-    sql: SPLIT_PART(${TABLE}.mkt_campaign,'_',9) ;;
+    # sql: SPLIT_PART(${TABLE}.mkt_campaign,'_',9) ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Marketing"
     drill_fields: [marketing_drills*]
   }
 
   dimension: marketing_audience {
     type: string
-    sql: SPLIT_PART(${TABLE}.mkt_campaign,'_',10) ;;
+    # sql: SPLIT_PART(${TABLE}.mkt_campaign,'_',10) ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Marketing"
     drill_fields: [marketing_drills*]
   }
 
   dimension: marketing_sub_audience {
     type: string
-    sql: SPLIT_PART(${TABLE}.mkt_campaign,'_',11) ;;
+    # sql: SPLIT_PART(${TABLE}.mkt_campaign,'_',11) ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Marketing"
     drill_fields: [marketing_drills*]
   }
 
   dimension: marketing_ad_type {
     type: string
-    sql: SPLIT_PART(${TABLE}.mkt_campaign,'_',12) ;;
+    # sql: SPLIT_PART(${TABLE}.mkt_campaign,'_',12) ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Marketing"
     drill_fields: [marketing_drills*]
   }
@@ -494,7 +549,8 @@ view: shared_fields_common {
   dimension: ip_address {
     description: "The user's IP address, with the final octet replaced with \"1\" to remove personally identifiable information."
     type: string
-    sql: ${TABLE}.user_ipaddress ;;
+    # sql: ${TABLE}.user_ipaddress ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "IP"
   }
 
@@ -502,19 +558,22 @@ view: shared_fields_common {
     description: "Yes if the IP address maps to a known BC Government network."
     type: yesno
     # the filter is checking to see if the IP is in the gov network
-    sql: ${TABLE}.is_government;;
+    # sql: ${TABLE}.is_government;;
+    sql: ${TABLE}.status="complete" ;; #Won
   }
 
   dimension: ip_isp {
     label: "Internet Service Provider"
     type: string
-    sql: ${TABLE}.ip_isp ;;
+    # sql: ${TABLE}.ip_isp ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "IP"
   }
 
   dimension: ip_organization {
     type: string
-    sql: ${TABLE}.ip_organization ;;
+    # sql: ${TABLE}.ip_organization ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "IP"
   }
 
@@ -523,11 +582,12 @@ view: shared_fields_common {
     label: "LDB IP Range"
     type: string
     # the filter is checking to see if the IP is in the gov network
-    sql: CASE
-            WHEN ${ip_address} LIKE '142.22.%' OR ${ip_address} LIKE '142.23.%' OR ${ip_address} LIKE '142.24.%' OR ${ip_address} LIKE '142.25.%' OR ${ip_address} LIKE '142.26.%' OR ${ip_address} LIKE '142.27.%' OR ${ip_address} LIKE '142.28.%' OR ${ip_address} LIKE '142.29.%' OR ${ip_address} LIKE '142.30.%' OR ${ip_address} LIKE '142.31.%' OR  ${ip_address} LIKE '142.32.%' OR ${ip_address} LIKE '142.33.%' OR ${ip_address} LIKE '142.34.%' OR ${ip_address} LIKE '142.35.%' OR ${ip_address} LIKE '142.36.%' THEN 'Government'
-            WHEN ${ip_address} LIKE '172.27.36.%' OR ${ip_address} LIKE '172.27.37.%' OR ${ip_address} LIKE '172.27.38.%' OR ${ip_address} LIKE '172.27.39.%' OR ${ip_address} LIKE '64.114.89.%' OR ${ip_address} LIKE '207.194.196.%' THEN 'BC Liquor (Retail & Head Office)'
-            WHEN ${ip_address} LIKE '205.250.135.%' OR ${ip_address} LIKE '207.81.212.%' OR ${ip_address} LIKE '35.203.104.%' THEN 'Web Vendor (D7)'
-          ELSE 'Other' END ;;
+    # sql: CASE
+    #         WHEN ${ip_address} LIKE '142.22.%' OR ${ip_address} LIKE '142.23.%' OR ${ip_address} LIKE '142.24.%' OR ${ip_address} LIKE '142.25.%' OR ${ip_address} LIKE '142.26.%' OR ${ip_address} LIKE '142.27.%' OR ${ip_address} LIKE '142.28.%' OR ${ip_address} LIKE '142.29.%' OR ${ip_address} LIKE '142.30.%' OR ${ip_address} LIKE '142.31.%' OR  ${ip_address} LIKE '142.32.%' OR ${ip_address} LIKE '142.33.%' OR ${ip_address} LIKE '142.34.%' OR ${ip_address} LIKE '142.35.%' OR ${ip_address} LIKE '142.36.%' THEN 'Government'
+    #         WHEN ${ip_address} LIKE '172.27.36.%' OR ${ip_address} LIKE '172.27.37.%' OR ${ip_address} LIKE '172.27.38.%' OR ${ip_address} LIKE '172.27.39.%' OR ${ip_address} LIKE '64.114.89.%' OR ${ip_address} LIKE '207.194.196.%' THEN 'BC Liquor (Retail & Head Office)'
+    #         WHEN ${ip_address} LIKE '205.250.135.%' OR ${ip_address} LIKE '207.81.212.%' OR ${ip_address} LIKE '35.203.104.%' THEN 'Web Vendor (D7)'
+    #       ELSE 'Other' END ;;
+    sql: ${TABLE}.status ;; #Won
     suggestions: ["Government", "BC Liquor (Retail & Head Office)", "Web Vendor (D7)", "Other"]
   }
 
@@ -535,7 +595,8 @@ view: shared_fields_common {
     description: "Yes if the IP address maps to EfficiencyBC's development IPs."
     type: yesno
     # the filter is checking to see if the IP belongs to City Green (184.69.13.226) or Caorda (184.71.25.166)
-    sql: ${ip_address} = '184.69.13.226' OR ${ip_address} = '184.71.25.166' ;;
+    # sql: ${ip_address} = '184.69.13.226' OR ${ip_address} = '184.71.25.166' ;;
+    sql: ${TABLE}.status="complete" ;; #Won
   }
 
   # dimension: ip_isp {
@@ -572,13 +633,15 @@ view: shared_fields_common {
 
   dimension: os_name {
     type: string
-    sql: ${TABLE}.os_name ;;
+    # sql: ${TABLE}.os_name ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "OS"
   }
 
   dimension: os_family {
     type: string
-    sql: ${TABLE}.os_family ;;
+    # sql: ${TABLE}.os_family ;;
+    sql: ${TABLE}.status ;; #Won
     drill_fields: [browser_family,browser_name,browser_version]
     group_label: "OS"
   }
@@ -597,13 +660,15 @@ view: shared_fields_common {
 
   dimension: os_manufacturer {
     type: string
-    sql: ${TABLE}.os_manufacturer ;;
+    # sql: ${TABLE}.os_manufacturer ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "OS"
   }
 
   dimension: os_timezone {
     type: string
-    sql: ${TABLE}.os_timezone ;;
+    # sql: ${TABLE}.os_timezone ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "OS"
   }
 
@@ -612,7 +677,8 @@ view: shared_fields_common {
   dimension: node_id {
     description: "The CMS Lite node identifier for Gov pages."
     type: string
-    sql: ${TABLE}.node_id;;
+    # sql: ${TABLE}.node_id;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Page"
   }
 
@@ -635,39 +701,43 @@ view: shared_fields_common {
 
   dimension: page_referrer {
     type: string
-    sql: ${TABLE}.page_referrer ;;
+    # sql: ${TABLE}.page_referrer ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Referrer"
-    link: {
-      label: "Visit Page"
-      url: "{{ value }}"
-      icon_url: "https://looker.com/favicon.ico"
-    }
+    # link: {
+    #   label: "Visit Page"
+    #   url: "{{ value }}"
+    #   icon_url: "https://looker.com/favicon.ico"
+    # }
   }
 
   dimension: page_referrer_display_url {
     type: string
-    sql: ${TABLE}.page_referrer_display_url;;
+    # sql: ${TABLE}.page_referrer_display_url;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Referrer"
     drill_fields: [page_referrer]
-    link: {
-      label: "Visit Page"
-      url: "{{ value }}"
-      icon_url: "https://looker.com/favicon.ico"
-    }
+    # link: {
+    #   label: "Visit Page"
+    #   url: "{{ value }}"
+    #   icon_url: "https://looker.com/favicon.ico"
+    # }
   }
   ### Device
 
   dimension: device_type {
     description: "A label that describes the viewing device type as Mobile or Computer."
     type: string
-    sql: ${TABLE}.dvce_type ;;
+    # sql: ${TABLE}.dvce_type ;;
+    sql: ${TABLE}.status ;; #Won
     group_label: "Device"
   }
 
   dimension: device_is_mobile {
     description: "True if the viewing device is mobile; False otherwise."
     type: yesno
-    sql: ${TABLE}.dvce_ismobile ;;
+    # sql: ${TABLE}.dvce_ismobile ;;
+    sql: ${TABLE}.status="complete" ;; #Won
     group_label: "Device"
   }
 

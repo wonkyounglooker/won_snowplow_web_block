@@ -510,5 +510,6 @@ explore: performance_timing {
 datagroup: aa_datagroup_cmsl_loaded {
   label: "Updates with todays date at 4:55AM"
   description: "Triggers CMS Lite Metadata dependent Aggregate Aware tables to rebuild after each new day and after nightly cmslitemetadata microservice has run."
-  sql_trigger: SELECT DATE(timezone('America/Vancouver', now() - interval '295 minutes')) ;;
+  # sql_trigger: SELECT DATE(timezone('America/Vancouver', now() - interval '295 minutes')) ;;
+  sql_trigger:NOW() ;;
 }
