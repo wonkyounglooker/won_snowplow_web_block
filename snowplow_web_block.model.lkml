@@ -1,3 +1,5 @@
+connection: "thelook" # Won added this
+
 # Copyright (c) 2016 Snowplow Analytics Ltd. All rights reserved.
 #
 # This program is licensed to you under the Apache License Version 2.0,
@@ -16,7 +18,7 @@
 # License:     Apache License Version 2.0
 
 
-connection: "redshift_pacific_time"
+#connection: "redshift_pacific_time"
 # Set the week start day to Sunday. Default is Monday
 week_start_day: sunday
 
@@ -45,10 +47,10 @@ explore: geo_cache {
 explore: site_cache {
   hidden: yes
 
-  access_filter: {
-    field: page_urlhost
-    user_attribute: urlhost
-  }
+  # access_filter: {
+  #   field: page_urlhost
+  #   user_attribute: urlhost
+  # }
 }
 
 explore: page_views {
@@ -60,36 +62,36 @@ explore: page_views {
 
   # adding this access filter to be used by the CMS Lite embed code generator
   #    to allow for page-level dashboards
-  access_filter: {
-    field: node_id
-    user_attribute: node_id
-  }
-  access_filter: {
-    field: page_urlhost
-    user_attribute: urlhost
-  }
-  access_filter: {
-    field: page_exclusion_filter
-    user_attribute: exclusion_filter
-  }
-  access_filter: {
-    field: app_id
-    user_attribute: app_id
-  }
+  # access_filter: {
+  #   field: node_id
+  #   user_attribute: node_id
+  # }
+  # access_filter: {
+  #   field: page_urlhost
+  #   user_attribute: urlhost
+  # }
+  # access_filter: {
+  #   field: page_exclusion_filter
+  #   user_attribute: exclusion_filter
+  # }
+  # access_filter: {
+  #   field: app_id
+  #   user_attribute: app_id
+  # }
 
-  #access filter based on the first part of the URL (eg https://site.com/section/page.html)
-  access_filter: {
-    field: page_section
-    user_attribute: section
-  }
-  access_filter: {
-    field: page_sub_section
-    user_attribute: sub_section
-  }
-  access_filter: {
-    field: cmslite_themes.theme_id
-    user_attribute: theme
-  }
+  # #access filter based on the first part of the URL (eg https://site.com/section/page.html)
+  # access_filter: {
+  #   field: page_section
+  #   user_attribute: section
+  # }
+  # access_filter: {
+  #   field: page_sub_section
+  #   user_attribute: sub_section
+  # }
+  # access_filter: {
+  #   field: cmslite_themes.theme_id
+  #   user_attribute: theme
+  # }
 
   # sql_always_where: ${page_url} NOT LIKE '%video.web.%' ;; -- Causing problems with video.gov analytics
   join: sessions {
@@ -173,10 +175,10 @@ explore: chatbot {
     relationship: one_to_one
   }
 
-  access_filter: {
-    field: page_views.page_urlhost
-    user_attribute: urlhost
-  }
+  # access_filter: {
+  #   field: page_views.page_urlhost
+  #   user_attribute: urlhost
+  # }
 }
 
 explore: chatbot_intents_and_clicks { #view that only includes intents, in hopes of making it faster
@@ -193,10 +195,10 @@ explore: chatbot_intents_and_clicks { #view that only includes intents, in hopes
     relationship: one_to_one
   }
 
-  access_filter: {
-    field: page_views.page_urlhost
-    user_attribute: urlhost
-  }
+  # access_filter: {
+  #   field: page_views.page_urlhost
+  #   user_attribute: urlhost
+  # }
 }
 
 explore: sessions {
@@ -219,36 +221,36 @@ explore: sessions {
     relationship: one_to_one
   }
 
-  access_filter: {
-    field: node_id
-    user_attribute: node_id
-  }
-  access_filter: {
-    field: first_page_urlhost
-    user_attribute: urlhost
-  }
-  access_filter: {
-    field: first_page_exclusion_filter
-    user_attribute: exclusion_filter
-  }
-  access_filter: {
-    field: app_id
-    user_attribute: app_id
-  }
+  # access_filter: {
+  #   field: node_id
+  #   user_attribute: node_id
+  # }
+  # access_filter: {
+  #   field: first_page_urlhost
+  #   user_attribute: urlhost
+  # }
+  # access_filter: {
+  #   field: first_page_exclusion_filter
+  #   user_attribute: exclusion_filter
+  # }
+  # access_filter: {
+  #   field: app_id
+  #   user_attribute: app_id
+  # }
 
-  #access filter based on the first part of the URL (eg https://site.com/section/page.html)
-  access_filter: {
-    field: first_page_section
-    user_attribute: section
-  }
-  access_filter: {
-    field: first_page_sub_section
-    user_attribute: sub_section
-  }
-  access_filter: {
-    field: cmslite_themes.theme_id
-    user_attribute: theme
-  }
+  # #access filter based on the first part of the URL (eg https://site.com/section/page.html)
+  # access_filter: {
+  #   field: first_page_section
+  #   user_attribute: section
+  # }
+  # access_filter: {
+  #   field: first_page_sub_section
+  #   user_attribute: sub_section
+  # }
+  # access_filter: {
+  #   field: cmslite_themes.theme_id
+  #   user_attribute: theme
+  # }
 }
 
 explore: users {
@@ -272,35 +274,35 @@ explore: clicks{
     sql_on: ${clicks.node_id} = ${cmslite_themes.node_id} ;;
     relationship: one_to_one
   }
-  access_filter: {
-    field: node_id
-    user_attribute: node_id
-  }
-  access_filter: {
-    field: page_urlhost
-    user_attribute: urlhost
-  }
-  access_filter: {
-    field: page_exclusion_filter
-    user_attribute: exclusion_filter
-  }
-  access_filter: {
-    field: app_id
-    user_attribute: app_id
-  }
-  #access filter based on the first part of the URL (eg https://site.com/section/page.html)
-  access_filter: {
-    field: page_section
-    user_attribute: section
-  }
-  access_filter: {
-    field: page_sub_section
-    user_attribute: sub_section
-  }
-  access_filter: {
-    field: cmslite_themes.theme_id
-    user_attribute: theme
-  }
+  # access_filter: {
+  #   field: node_id
+  #   user_attribute: node_id
+  # }
+  # access_filter: {
+  #   field: page_urlhost
+  #   user_attribute: urlhost
+  # }
+  # access_filter: {
+  #   field: page_exclusion_filter
+  #   user_attribute: exclusion_filter
+  # }
+  # access_filter: {
+  #   field: app_id
+  #   user_attribute: app_id
+  # }
+  # #access filter based on the first part of the URL (eg https://site.com/section/page.html)
+  # access_filter: {
+  #   field: page_section
+  #   user_attribute: section
+  # }
+  # access_filter: {
+  #   field: page_sub_section
+  #   user_attribute: sub_section
+  # }
+  # access_filter: {
+  #   field: cmslite_themes.theme_id
+  #   user_attribute: theme
+  # }
 }
 
 explore: searches {
@@ -315,39 +317,39 @@ explore: searches {
     sql_on: ${searches.node_id} = ${cmslite_themes.node_id} ;;
     relationship: one_to_one
   }
-  access_filter: {
-    field: node_id
-    user_attribute: node_id
-  }
-  access_filter: {
-    field: page_urlhost
-    user_attribute: urlhost
-  }
-  access_filter: {
-    field: page_exclusion_filter
-    user_attribute: exclusion_filter
-  }
-  access_filter: {
-    field: app_id
-    user_attribute: app_id
-  }
+  # access_filter: {
+  #   field: node_id
+  #   user_attribute: node_id
+  # }
+  # access_filter: {
+  #   field: page_urlhost
+  #   user_attribute: urlhost
+  # }
+  # access_filter: {
+  #   field: page_exclusion_filter
+  #   user_attribute: exclusion_filter
+  # }
+  # access_filter: {
+  #   field: app_id
+  #   user_attribute: app_id
+  # }
 
-  #access filter based on the first part of the URL (eg https://site.com/section/page.html)
-  access_filter: {
-    field: page_section
-    user_attribute: section
-  }
-  access_filter: {
-    field: page_sub_section
-    user_attribute: sub_section
-  }
-  access_filter: {
-    field: cmslite_themes.theme_id
-    user_attribute: theme
-  }
+  # #access filter based on the first part of the URL (eg https://site.com/section/page.html)
+  # access_filter: {
+  #   field: page_section
+  #   user_attribute: section
+  # }
+  # access_filter: {
+  #   field: page_sub_section
+  #   user_attribute: sub_section
+  # }
+  # access_filter: {
+  #   field: cmslite_themes.theme_id
+  #   user_attribute: theme
+  # }
 
 
-}
+ }
 
 explore: form_action {
   label: "Form Actions"
@@ -363,10 +365,10 @@ explore: form_action {
     relationship: one_to_one
   }
 
-  access_filter: {
-    field: form_action.page_urlhost
-    user_attribute: urlhost
-  }
+  # access_filter: {
+  #   field: form_action.page_urlhost
+  #   user_attribute: urlhost
+  # }
 }
 explore: form_error {
   label: "Form Errors"
@@ -382,19 +384,19 @@ explore: form_error {
     relationship: one_to_one
   }
 
-  access_filter: {
-    field: form_error.page_urlhost
-    user_attribute: urlhost
-  }
+  # access_filter: {
+  #   field: form_error.page_urlhost
+  #   user_attribute: urlhost
+  # }
 }
 
 explore: cmslite_metadata {
   persist_for: "60 minutes"
 
-  access_filter: {
-    field: node_id
-    user_attribute: node_id
-  }
+  # access_filter: {
+  #   field: node_id
+  #   user_attribute: node_id
+  # }
 }
 
 explore: esb_se_pathways {
@@ -421,10 +423,10 @@ explore: youtube_embed_video {
     sql_on: ${page_views.page_view_id} = ${youtube_embed_video.page_view_id} ;;
     relationship: many_to_one
   }
-  access_filter: {
-    field: page_views.page_urlhost
-    user_attribute: urlhost
-  }
+  # access_filter: {
+  #   field: page_views.page_urlhost
+  #   user_attribute: urlhost
+  # }
   join: cmslite_themes {
     type: left_outer
     sql_on: ${page_views.node_id} = ${cmslite_themes.node_id} ;;
@@ -446,10 +448,10 @@ explore: workbc_careertoolkit {
     sql_on: ${page_views.node_id} = ${cmslite_themes.node_id} ;;
     relationship: one_to_one
   }
-  access_filter: {
-    field: page_views.page_urlhost
-    user_attribute: urlhost
-  }
+  # access_filter: {
+  #   field: page_views.page_urlhost
+  #   user_attribute: urlhost
+  # }
 }
 explore: forms {
   persist_for: "60 minutes"
@@ -469,10 +471,10 @@ explore: forms {
 explore: asset_downloads {
   persist_for: "60 minutes"
 
-  access_filter: {
-    field: asset_downloads.asset_host
-    user_attribute: urlhost
-  }
+  # access_filter: {
+  #   field: asset_downloads.asset_host
+  #   user_attribute: urlhost
+  # }
 
   join: cmslite_metadata {
     type: left_outer
@@ -484,10 +486,10 @@ explore: asset_downloads {
 explore: performance_timing {
   persist_for: "60 minutes"
 
-  access_filter: {
-    field: page_views.page_urlhost
-    user_attribute: urlhost
-  }
+  # access_filter: {
+  #   field: page_views.page_urlhost
+  #   user_attribute: urlhost
+  # }
 
   join: page_views {
     type:  left_outer
