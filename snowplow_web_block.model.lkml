@@ -68,7 +68,7 @@ explore: page_views {
   # }
   # access_filter: {
   #   field: page_urlhost
-  #   user_attribute: urlhost
+  #   user_attribute: no_editing_allowed
   # }
   # access_filter: {
   #   field: page_exclusion_filter

@@ -84,8 +84,8 @@ explore: +page_views {
         cmslite_themes.theme,
         cmslite_themes.subtheme,
         cmslite_themes.topic,
-        page_views.page_title,
         page_views.page_display_url,
+        page_views.page_title,
         page_views.page_view_start_date
       ]
       measures: [page_views.row_count]
